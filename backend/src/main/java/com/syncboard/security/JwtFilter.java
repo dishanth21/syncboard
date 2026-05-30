@@ -1,14 +1,13 @@
 package com.syncboard.security;
 
 import java.io.IOException;
-import java.util.Collections;
 
-import org.springframework.security.authentication.
-        UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.
         SecurityContextHolder;
 
-import jakarta.servlet.Filter;
+import jakarta.servlet.
+        Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -48,13 +47,27 @@ public class JwtFilter implements Filter {
                         JwtUtil.extractEmail(
                                 token);
 
-                UsernamePasswordAuthenticationToken auth =
+                String role =
+        JwtUtil.extractRole(
+                token);
 
-                        new UsernamePasswordAuthenticationToken(
-                                email,
-                                null,
-                                Collections.emptyList()
-                        );
+UsernamePasswordAuthenticationToken auth =
+
+        new UsernamePasswordAuthenticationToken(
+
+                email,
+
+                null,
+
+                java.util.List.of(
+
+                        new org.springframework.security.core.authority
+                                .SimpleGrantedAuthority(
+
+                                        "ROLE_" + role
+                                )
+                )
+        );
 
                 SecurityContextHolder
                         .getContext()

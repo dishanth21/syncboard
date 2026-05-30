@@ -18,18 +18,29 @@ public class JwtUtil {
                     SECRET.getBytes());
 
     public static String generateToken(
-            String email) {
+        String email,
+        String role) {
 
-        return Jwts.builder()
-                .subject(email)
-                .issuedAt(new Date())
-                .expiration(
-                        new Date(
-                                System.currentTimeMillis()
-                                + 86400000))
-                .signWith(KEY)
-                .compact();
-    }
+    return Jwts.builder()
+
+            .subject(email)
+
+            .claim(
+                    "role",
+                    role)
+
+            .issuedAt(
+                    new Date())
+
+            .expiration(
+                    new Date(
+                            System.currentTimeMillis()
+                                    + 86400000))
+
+            .signWith(KEY)
+
+            .compact();
+}
 
     public static String extractEmail(
             String token) {
@@ -61,4 +72,18 @@ public class JwtUtil {
             return false;
         }
     }
+    public static String extractRole(
+        String token) {
+
+    Claims claims =
+            Jwts.parser()
+                    .verifyWith(KEY)
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+
+    return claims.get(
+            "role",
+            String.class);
+}
 }

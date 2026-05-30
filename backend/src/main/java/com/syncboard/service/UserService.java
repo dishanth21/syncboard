@@ -41,7 +41,8 @@ public class UserService {
         }
 
         return JwtUtil.generateToken(
-                user.getEmail());
+                user.getEmail(),
+                user.getRole());
     }
 
     public User registerUser(User user) {

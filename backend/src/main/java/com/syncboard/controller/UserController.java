@@ -14,4 +14,11 @@ public class UserController {
         return "Protected User Profile";
 
     }
+    @GetMapping("/admin")
+
+public String adminOnly() {
+
+    return "Admin Access Granted";
+
+}
 }

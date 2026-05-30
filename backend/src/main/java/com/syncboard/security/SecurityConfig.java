@@ -18,20 +18,25 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
 
-                .authorizeHttpRequests(auth ->
-                        auth
+                .authorizeHttpRequests(auth -> auth
 
-.requestMatchers(
-        "/api/v1/auth/**",
-        "/api/v1/health"
+        .requestMatchers(
+                "/api/v1/auth/**",
+                "/api/v1/health"
+        )
+
+        .permitAll()
+
+        .requestMatchers(
+                "/api/v1/user/admin"
+        )
+
+        .hasRole("ADMIN")
+
+        .anyRequest()
+
+        .authenticated()
 )
-
-.permitAll()
-
-.anyRequest()
-
-.authenticated()
-                )
 
                 .addFilterBefore(
                         new JwtFilter(),
