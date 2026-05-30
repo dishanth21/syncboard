@@ -17,8 +17,27 @@ public class SecurityConfig {
 
         http
                 .csrf(csrf -> csrf.disable())
+
                 .authorizeHttpRequests(auth ->
-                        auth.anyRequest().permitAll())
+                        auth
+
+.requestMatchers(
+        "/api/v1/auth/**",
+        "/api/v1/health"
+)
+
+.permitAll()
+
+.anyRequest()
+
+.authenticated()
+                )
+
+                .addFilterBefore(
+                        new JwtFilter(),
+                        org.springframework.security.web.authentication
+                                .UsernamePasswordAuthenticationFilter.class)
+
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();
