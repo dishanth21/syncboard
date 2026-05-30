@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Test</title>
+</head>
+
+<body>
+
+<h2>Realtime Task Events</h2>
+
+<div id="messages"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+
+<script>
+
+const socket =
+new SockJS('http://localhost:8081/ws');
+
+const stompClient =
+Stomp.over(socket);
+
+stompClient.connect(
+{},
+function() {
+
+    console.log("Connected");
+
+    stompClient.subscribe(
+
+        '/topic/task-moves',
+
+        function(message) {
+
+            document
+            .getElementById(
+                "messages")
+
+            .innerHTML +=
+
+            "<p>"
+            + message.body
+            + "</p>";
+        });
+});
+
+</script>
+
+</body>
+</html>

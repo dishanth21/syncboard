@@ -2,8 +2,11 @@ package com.syncboard.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,5 +40,29 @@ public class BoardController {
 
         return boardService
                 .getBoards();
+    }
+
+    @GetMapping("/{boardId}")
+    public Board getBoardById(
+            @PathVariable Long boardId) {
+
+        return boardService
+                .getBoardById(boardId);
+    }
+
+    @PutMapping("/{boardId}")
+    public Board updateBoard(
+            @PathVariable Long boardId,
+            @RequestBody Board board) {
+
+        return boardService
+                .updateBoard(boardId, board);
+    }
+
+    @DeleteMapping("/{boardId}")
+    public void deleteBoard(
+            @PathVariable Long boardId) {
+
+        boardService.deleteBoard(boardId);
     }
 }

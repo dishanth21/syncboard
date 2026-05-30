@@ -31,4 +31,28 @@ public class BoardService {
         return boardRepository
                 .findAll();
     }
+
+    public Board getBoardById(Long boardId) {
+        return boardRepository.findById(boardId)
+                .orElseThrow(() ->
+                    new RuntimeException(
+                        "Board not found"));
+    }
+
+    public Board updateBoard(Long boardId, Board boardDetails) {
+        Board board = getBoardById(boardId);
+        
+        if (boardDetails.getName() != null) {
+            board.setName(boardDetails.getName());
+        }
+        if (boardDetails.getDescription() != null) {
+            board.setDescription(boardDetails.getDescription());
+        }
+        
+        return boardRepository.save(board);
+    }
+
+    public void deleteBoard(Long boardId) {
+        boardRepository.deleteById(boardId);
+    }
 }

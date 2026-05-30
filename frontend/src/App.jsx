@@ -7,6 +7,7 @@ import {
 import LoginPage from "./pages/LoginPage";
 import Dashboard from "./pages/Dashboard";
 import AnalyticsPage from "./pages/AnalyticsPage";
+import UserProfilePage from "./pages/UserProfilePage";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -34,6 +35,22 @@ function App() {
             <ProtectedRoute>
 
               <Dashboard />
+
+            </ProtectedRoute>
+
+          }
+
+        />
+
+        <Route
+
+          path="/profile"
+
+          element={
+
+            <ProtectedRoute>
+
+              <UserProfilePage />
 
             </ProtectedRoute>
 

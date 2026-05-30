@@ -61,4 +61,27 @@ public class UserService {
 
         return userRepository.save(user);
     }
+
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                    new RuntimeException(
+                        "User not found"));
+    }
+
+    public User updateUserProfile(String email, User userDetails) {
+        User user = getUserByEmail(email);
+        
+        if (userDetails.getName() != null) {
+            user.setName(userDetails.getName());
+        }
+        if (userDetails.getEmail() != null && !userDetails.getEmail().equals(email)) {
+            if (userRepository.findByEmail(userDetails.getEmail()).isPresent()) {
+                throw new RuntimeException("Email already in use");
+            }
+            user.setEmail(userDetails.getEmail());
+        }
+        
+        return userRepository.save(user);
+    }
 }
